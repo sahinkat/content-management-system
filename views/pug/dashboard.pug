@@ -1,0 +1,19 @@
+extends layouts/_layout.pug
+
+block variables
+	- var activePage = 'dashboard';
+	- var activeGroup = 'none';
+
+block content
+	.app-title
+		div
+			h1
+				i.fa.fa-dashboard
+				|  Ana Sayfa
+			p Modül Mesaj Uygulaması özet bilgi
+
+		ul.app-breadcrumb.breadcrumb
+			li.breadcrumb-item
+				i.fa.fa-home.fa-lg
+			li.breadcrumb-item
+				a(href='/dashboard') Ana Sayfa

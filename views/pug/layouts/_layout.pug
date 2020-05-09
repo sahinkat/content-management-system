@@ -1,0 +1,38 @@
+doctype html
+html(lang="en")
+
+	//- Variables to set active page in sidebar
+	block variables
+		- var activePage = 'dashboard';
+		- var activeGroup = 'none';
+
+	head
+		meta(name="description", content="Modül Mesaj Uygulaması")
+
+		// Open Graph Meta
+		meta(property="og:type", content="website")
+		meta(property="og:site_name", content="Modül Mesaj Uygulaması")
+		meta(property="og:title", content="Modül Mesaj Uygulaması")
+		meta(property="og:description", content="Modül Mesaj Uygulaması")
+
+		block title
+			title Modül Mesaj Uygulaması
+
+		include ../includes/_head.pug
+
+	body.app.sidebar-mini
+
+		// Navbar
+		include ../includes/_header.pug
+
+		// Sidebar menu
+		include ../includes/_sidebar.pug
+
+		main.app-content
+			block content
+
+		//- Javascripts
+		include ../includes/_javascript.pug
+
+		// Page specific javascripts
+		block specific-js

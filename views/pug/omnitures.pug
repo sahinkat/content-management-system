@@ -1,0 +1,24 @@
+extends layouts/_layout.pug
+
+block variables
+	- var activePage = 'omnitures';
+	- var activeGroup = 'pages';
+
+block content
+	.app-title
+		div
+			h1
+				i.fa.fa-dashboard
+				|  Omniture
+			p Omniture özet bilgi
+
+		ul.app-breadcrumb.breadcrumb
+			li.breadcrumb-item
+				i.fa.fa-home.fa-lg
+			li.breadcrumb-item
+				a(href='#') Omniture
+
+	.row
+		.col-md-12
+			.tile
+				.tile-body Omniture sayfası
