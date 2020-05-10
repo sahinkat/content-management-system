@@ -42,7 +42,8 @@ function connect() {
   return mongoose.connect(config.db, {
     keepAlive: 1,
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
   });
 }
 

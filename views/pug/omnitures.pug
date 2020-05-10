@@ -19,34 +19,44 @@ block content
 				a(href='#') Omniture
 
 	.row
-		.col-md-6
+		.col-md-12
 			.tile
-				.tile-body Omniture sayfası
-				h4 Demo
-				select.form-control#demoSelect(multiple="")
-					optgroup(label="Select Cities")
-						option Ahmedabad
-						option Surat
-						option Vadodara
-						option Rajkot
-						option Bhavnagar
-						option Jamnagar
-						option Gandhinagar
-						option Nadiad
-						option Morvi
-						option Surendranagar
-						option Junagadh
-						option Gandhidham
-						option Veraval
-						option Ghatlodiya
-						option Bharuch
-						option Anand
-						option Porbandar
-						option Godhra
-						option Navsari
-						option Dahod
-						option Botad
-						option Kapadwanj
+				form#aaa(action="/omnitures/table")
+					.row
+							.form-group.col-md-4
+								label.col-form-label.col-form-label-sm(for='demoSelect') Multi Combo
+								select.form-control.form-control-sm#demoSelect(multiple="")
+									optgroup(label="Select Cities")
+										option Ahmedabad
+										option Surat
+										option Vadodara
+										option Rajkot
+										option Bhavnagar
+										option Jamnagar
+										option Gandhinagar
+										option Nadiad
+										option Morvi
+										option Surendranagar
+										option Junagadh
+										option Gandhidham
+										option Veraval
+										option Ghatlodiya
+										option Bharuch
+										option Anand
+										option Porbandar
+										option Godhra
+										option Navsari
+										option Dahod
+										option Botad
+										option Kapadwanj
+							.form-group.col-md-4.align-self-end
+								button.btn.btn-primary(type="button")
+									i.fa.fa-fw.fa-lg.fa-check-circle
+									| Görüntüle
+	.row
+		.col-md-12
+			#omnitureTableContent
+				include omnitureTableContent.pug
 
 block specific-js
 	script(type='text/javascript', src="js/plugins/select2.min.js")

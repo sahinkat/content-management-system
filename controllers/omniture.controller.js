@@ -18,3 +18,7 @@ exports.test = function (req, res) {
 exports.getPage = function (req, res) {
   res.render("omnitures");
 };
+
+exports.getTable = function (req, res) {
+  res.render("omnitureTableContent");
+};
