@@ -8,13 +8,14 @@ const config = require('./config/development');
 // Imports routes
 const dashboardRoute = require('./routes/dashboard.route');
 const omnitureRoute = require('./routes/omniture.route');
+const sitemapRoute = require('./routes/sitemap.route');
 const loginRoute = require('./routes/login.route');
 
 const port = process.env.PORT || 3000;
 // initialize our express app
 const app = express();
-app.set("views", path.join(__dirname, "views/pug"));
 app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "views/pug"));
 
 // Make sure you place body-parser before your CRUD handlers!
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,6 +28,7 @@ app.get("/", loginRoute);
 app.get("/login", loginRoute);
 app.use('/dashboard', dashboardRoute);
 app.use('/omnitures', omnitureRoute);
+app.use('/sitemaps', sitemapRoute);
 connect();
 
 function connect() {

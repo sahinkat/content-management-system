@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
-const OmnitureModel = require('../models/omniture.model');
+const SitemapModel = require('../models/sitemap.model');
 
-const test = new OmnitureModel({ name: 'sahin', sent: true, flowId: 5 });
+const test = new SitemapModel({
+    application: 'INT-TR',
+    environment: 'TST',
+    treeId: 1344,
+    name: "Para Transferleri",
+    parent: null
+});
 
 //Simple version, without validation or sanitation
 exports.test = function (req, res) {
-  OmnitureModel.create(test, function (err, doc) {
+  SitemapModel.create(test, function (err, doc) {
     if (err) {
       console.log(err);
       return res.send(err);
@@ -16,5 +22,5 @@ exports.test = function (req, res) {
 };
 
 exports.getPage = function (req, res) {
-  res.render("omnitures");
+  res.render("sitemaps");
 };

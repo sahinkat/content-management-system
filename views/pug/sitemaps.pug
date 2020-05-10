@@ -1,0 +1,55 @@
+extends layouts/_layout.pug
+
+block variables
+	- var activePage = 'sitemaps';
+	- var activeGroup = 'pages';
+
+block content
+	.app-title
+		div
+			h1
+				i.fa.fa-list
+				|  Sitemap
+			p Sitemap özet bilgi
+
+		ul.app-breadcrumb.breadcrumb
+			li.breadcrumb-item
+				i.fa.fa-home.fa-lg
+			li.breadcrumb-item
+				a(href='#') SiteMap
+	.row
+		.col-md-12
+			.tile
+				.tile-body
+					.container
+						.row
+							.col-md-4
+								ul#tree1
+									li
+										a Yatırımlar
+										ul
+											li Fon
+											li
+												| Döviz
+												ul
+													li
+														| Alış / Satış
+														ul
+															li Alış
+															li Satış
+													li Emir
+											li Repo
+									li
+										| Para Transferleri
+										ul
+											li Havale
+											li
+												| EFT
+												ul
+													li İsme EFT
+													li Hesaba EFT
+											li Swift
+
+block specific-js
+	script(type="text/javascript").
+		$('#tree1').treed();

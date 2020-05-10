@@ -8,7 +8,7 @@ block content
 	.app-title
 		div
 			h1
-				i.fa.fa-dashboard
+				i.fa.fa-line-chart
 				|  Omniture
 			p Omniture özet bilgi
 
@@ -19,6 +19,36 @@ block content
 				a(href='#') Omniture
 
 	.row
-		.col-md-12
+		.col-md-6
 			.tile
 				.tile-body Omniture sayfası
+				h4 Demo
+				select.form-control#demoSelect(multiple="")
+					optgroup(label="Select Cities")
+						option Ahmedabad
+						option Surat
+						option Vadodara
+						option Rajkot
+						option Bhavnagar
+						option Jamnagar
+						option Gandhinagar
+						option Nadiad
+						option Morvi
+						option Surendranagar
+						option Junagadh
+						option Gandhidham
+						option Veraval
+						option Ghatlodiya
+						option Bharuch
+						option Anand
+						option Porbandar
+						option Godhra
+						option Navsari
+						option Dahod
+						option Botad
+						option Kapadwanj
+
+block specific-js
+	script(type='text/javascript', src="js/plugins/select2.min.js")
+	script(type="text/javascript").
+		$('#demoSelect').select2();
