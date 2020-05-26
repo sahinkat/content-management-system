@@ -17,6 +17,7 @@ exports.loadData = function(req, res) {
     let messageTextData = [];
     let messageTextDataOldArray = _.filter(pathMessageDataArray, {'function_num':pathData.function_id, 'site_code':pathData.site_code});
     let pathDefinition = _.find(pathDefinitionArray, {'functionID':pathData.function_id, 'site_code':pathData.site_code});
+    let pathDisabledData = _.find(pathDisabledDataArray, {'function_id':pathData.function_id, 'site_code':pathData.site_code});
     messageTextDataOldArray.forEach((messageTextDataOld) => {
       messageTextData.push({
         code: messageTextDataOld.function_code,
@@ -39,10 +40,10 @@ exports.loadData = function(req, res) {
       newIndStartDate: pathData.new_ind_start_date,
       newIndEndDate: pathData.new_ind_end_date,
       existance: {
-        tst: pathDefinition ? pathDefinition.test_existance_ind : null,
-        prd: pathDefinition ? pathDefinition.production_existance_ind : null,
+        tst: pathDefinition && parseInt(pathDefinition.test_existance_ind) ? true : false,
+        prd: pathDefinition && parseInt(pathDefinition.production_existance_ind) ? true : false,
       },
-      menuDisabledInd: _.find(pathDisabledDataArray, {'function_id':pathData.function_id, 'site_code':pathData.site_code}),
+      menuDisabledInd: pathDisabledData && parseInt(pathDisabledData.menu_disable_ind) ? true : false,
       messageText: messageTextData,
       createdAt: pathData.create_date,
       updatedAt: pathData.create_date,
