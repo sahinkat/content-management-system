@@ -1,4 +1,4 @@
 
-exports.getPage = function (req, res) {
-  res.render("login");
+exports.getPage = function(req, res) {
+  res.render('login');
 };
