@@ -6,10 +6,8 @@ const path = require('path');
 
 const config = require('./config/development');
 // Imports routes
-const loginRoute = require('./routes/login.route');
-const dashboardRoute = require('./routes/dashboard.route');
-const omnitureRoute = require('./routes/omniture.route');
-const initialRoute = require('./routes/initial.route');
+
+const generalRoute = require('./routes/general.route');
 
 // initialize our express app
 const app = express();
@@ -23,11 +21,8 @@ app.use(express.static(__dirname + '/public'));
 /**
  * Routes Definitions
  */
-app.get('/', loginRoute);
-app.get('/login', loginRoute);
-app.use('/dashboard', dashboardRoute);
-app.use('/omnitures', omnitureRoute);
-app.use('/initial', initialRoute);
+app.use('/', generalRoute);
+
 dbConnect();
 
 function dbConnect() {
