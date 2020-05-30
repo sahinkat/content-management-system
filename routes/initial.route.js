@@ -3,5 +3,5 @@ const router = new express.Router();
 
 const initialController = require('../controllers/initial.controller');
 
-router.get('/', initialController.loadData);
+router.get('/load', initialController.loadData);
 module.exports = router;

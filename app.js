@@ -11,7 +11,6 @@ const dashboardRoute = require('./routes/dashboard.route');
 const omnitureRoute = require('./routes/omniture.route');
 const initialRoute = require('./routes/initial.route');
 
-const port = process.env.PORT || 3000;
 // initialize our express app
 const app = express();
 app.set('view engine', 'pug');
@@ -29,15 +28,15 @@ app.get('/login', loginRoute);
 app.use('/dashboard', dashboardRoute);
 app.use('/omnitures', omnitureRoute);
 app.use('/initial', initialRoute);
-connect();
+dbConnect();
 
-function connect() {
+function dbConnect() {
   mongoose.connection
       .on('error', console.log)
-      .on('disconnected', connect)
+      .on('disconnected', dbConnect)
       .once('open', (_) => {
         console.log('Database connected:', config.db);
-        listen();
+        start();
       });
   return mongoose.connect(config.db, {
     keepAlive: 1,
@@ -47,8 +46,8 @@ function connect() {
   });
 }
 
-function listen() {
-  app.listen(port, () => {
-    console.log('Server is up and running on port number ' + port);
+function start() {
+  app.listen(config.port, () => {
+    console.log('Server is up and running on port number ' + config.port);
   });
 }
