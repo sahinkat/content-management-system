@@ -5,11 +5,19 @@ const loginRoute = require('./login.route');
 const dashboardRoute = require('./dashboard.route');
 const omnitureRoute = require('./omniture.route');
 const initialRoute = require('./initial.route');
+const parametersRoute = require('./parameters.route');
 
-router.get('/', loginRoute);
-router.get('/login', loginRoute);
+router.use('/', loginRoute);
+router.use('/login', loginRoute);
 router.use('/dashboard', dashboardRoute);
 router.use('/omnitures', omnitureRoute);
-router.use('/initial', initialRoute);
+
+
+router.use('/parameters', parametersRoute);
+
+
+router.use('/api/initial', initialRoute);
+router.use('/api/parameters', parametersRoute);
+
 
 module.exports = router;

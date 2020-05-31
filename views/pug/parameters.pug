@@ -1,0 +1,55 @@
+extends layouts/_layout.pug
+
+block variables
+	- var activePage = 'data-table';
+	- var activeGroup = 'tables';
+
+block title
+	title Data Table - Parameter List
+
+block content
+	.app-title
+		div
+			h1
+				i.fa.fa-th-list
+				|  Data Table
+			p Table to display parameters
+
+		ul.app-breadcrumb.breadcrumb.side
+			li.breadcrumb-item
+				i.fa.fa-home.fa-lg
+			li.breadcrumb-item
+				| Tables
+			li.breadcrumb-item.active
+				a(href="#") Data Table
+
+	.row
+		.col-md-12
+			.tile
+				.tile-body
+					.table-responsive
+						table.table.table-hover.table-bordered#sampleTable
+							thead
+								tr
+									th Type
+									th SubType
+									th Value
+									th Language
+									th Explanation
+									th Last Update
+							tbody
+								for parameter in parameters
+									tr
+										td= parameter.type
+										td= parameter.subType
+										td= parameter.value
+										td Language
+										td Explanation
+										td Last Update
+
+block specific-js
+	// Data table plugin
+	script(type='text/javascript', src="js/plugins/jquery.dataTables.min.js")
+	script(type='text/javascript', src="js/plugins/dataTables.bootstrap.min.js")
+	script(type='text/javascript').
+		$('#sampleTable').DataTable();

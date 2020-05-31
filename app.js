@@ -16,6 +16,7 @@ app.set('views', path.join(__dirname, 'views/pug'));
 
 // Make sure you place body-parser before your CRUD handlers!
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
 /**
