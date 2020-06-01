@@ -3,11 +3,38 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
 
 const config = require('./config/development');
 // Imports routes
 
 const generalRoute = require('./routes/general.route');
+
+// Swagger set up
+const options = {
+  swaggerDefinition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Modul Mesaj",
+      version: "1.0.0",
+      description:
+        "Modul mesaj uygulaması api test",
+      contact: {
+        name: "Dijital Bankacılık",
+        url: "https://swagger.io",
+        email: "Info@SmartBear.com"
+      }
+    },
+    servers: [
+      {
+        url: "http://localhost:3000/"
+      }
+    ]
+  },
+  apis: ["./models/parameters.model.js", "./routes/parameters.route.js"]
+};
+const specs = swaggerJsdoc(options);
 
 // initialize our express app
 const app = express();
@@ -23,6 +50,13 @@ app.use(express.static(__dirname + '/public'));
  * Routes Definitions
  */
 app.use('/', generalRoute);
+app.use("/docs", swaggerUi.serve);
+app.get(
+  "/docs",
+  swaggerUi.setup(specs, {
+    explorer: true
+  })
+);
 
 dbConnect();
 

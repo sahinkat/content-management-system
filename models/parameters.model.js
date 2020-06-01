@@ -1,6 +1,33 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *      Parameters:
+ *        type: object
+ *        required:
+ *          - type
+ *          - subType
+ *          - value
+ *        properties:
+ *          type:
+ *            type: string
+ *          subType:
+ *            type: string
+ *            description: Email for the user, needs to be unique.
+ *          value:
+ *            type: object
+ *          explanation:
+ *            type: object
+ *        example:
+ *           type: abcd
+ *           subType: defg
+ *           value: {tr:qwer}
+ *           explanation: {tr:qwer}
+ */
+
 const parametersSchema = new Schema({
   type: {
     type: Schema.Types.String,
