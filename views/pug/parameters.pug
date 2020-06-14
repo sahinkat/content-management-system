@@ -5,23 +5,21 @@ block variables
 	- var activeGroup = 'tables';
 
 block title
-	title Data Table - Parameter List
+	title Parameter List
 
 block content
 	.app-title
 		div
 			h1
 				i.fa.fa-th-list
-				|  Data Table
+				|  Parameter List
 			p Table to display parameters
 
 		ul.app-breadcrumb.breadcrumb.side
 			li.breadcrumb-item
 				i.fa.fa-home.fa-lg
-			li.breadcrumb-item
-				| Tables
 			li.breadcrumb-item.active
-				a(href="#") Data Table
+				a(href="#") Parameter List
 
 	.row
 		.col-md-12
@@ -33,23 +31,75 @@ block content
 								tr
 									th Type
 									th SubType
-									th Value
 									th Language
+									th Value
 									th Explanation
 									th Last Update
+									th Action
 							tbody
 								for parameter in parameters
 									tr
 										td= parameter.type
 										td= parameter.subType
-										td= parameter.value
-										td Language
-										td Explanation
-										td Last Update
-
+										td tr
+										td= parameter.value.tr
+										td= parameter.explanation.tr
+										td= parameter.updatedAt
+										td
+											.btn-group
+												a.btn.btn-primary(href='#'): i.fa.fa-lg.fa-edit
+												a.btn.btn-primary
+													.demoNotify(href='#', row=parameter._id): i.fa.fa-lg.fa-trash
+									tr
+										td= parameter.type
+										td= parameter.subType
+										td en
+										td= parameter.value.en
+										td= parameter.explanation.en
+										td= parameter.updatedAt
+										td
+								p
+									a.btn.btn-primary.icon-btn(href="")
+										i.fa.fa-plus
+										| Add Parameter
 block specific-js
 	// Data table plugin
 	script(type='text/javascript', src="js/plugins/jquery.dataTables.min.js")
 	script(type='text/javascript', src="js/plugins/dataTables.bootstrap.min.js")
+	script(type='text/javascript', src="js/plugins/bootstrap-notify.min.js")
+	script(type='text/javascript', src="js/plugins/sweetalert.min.js")
 	script(type='text/javascript').
 		$('#sampleTable').DataTable();
+	script(type='text/javascript').
+		$('.demoNotify').click(function(){
+			let self = this;
+			swal({
+				title: "Are you sure?",
+				text: "You will not be able to recover this imaginary file!",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonText: "Yes, delete it!",
+				cancelButtonText: "No, cancel plx!",
+				closeOnConfirm: false,
+				closeOnCancel: false
+			}, function(isConfirm) {
+				if (isConfirm) {
+					$.ajax({
+					  url: '/parameters/'+ $(self).attr("row"),
+					  method: 'DELETE',
+						success: function(resp) {
+							swal({
+							title: "Deleted!",
+							text: resp.data,
+							type: "success"}, function(isConfirm) {
+								if (isConfirm) {
+									window.location.reload();
+								}
+							});
+					  },
+					});
+				} else {
+					swal("Cancelled", "Your parameter is safe :)", "error");
+				}
+			});
+		});

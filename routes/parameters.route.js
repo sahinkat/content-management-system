@@ -32,5 +32,6 @@ const parametersController = require('../controllers/parameters.controller');
  *                $ref: '#/components/schemas/User'
  */
 router.post('/', parametersController.insertParameter);
+router.delete('/:_id', parametersController.deleteParameter);
 router.get('/', parametersController.getPage);
 module.exports = router;

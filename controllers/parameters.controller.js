@@ -21,11 +21,27 @@ exports.insertParameter = function(req, res) {
 };
 
 exports.getPage = async function(req, res) {
-  let parameters = await getParameters();
+  const parameters = await getParameters();
   res.render('parameters', {parameters: parameters});
 };
 
-function getParameters(){
-  let parameters = ParametersModel.find();
+exports.deleteParameter = async function(req, res) {
+  deleteOneParameter(req.params._id, res);
+};
+
+function getParameters() {
+  const parameters = ParametersModel.find();
   return parameters;
+}
+
+function deleteOneParameter(_id, res) {
+  ParametersModel.deleteOne({'_id': _id},
+      function(err, doc) {
+        if (err) {
+          console.log(err);
+          return res.send(err);
+        } else {
+          return res.send(_id);
+        }
+      });
 }
