@@ -3,6 +3,7 @@ extends layouts/_layout.pug
 block variables
 	- var activePage = 'data-table';
 	- var activeGroup = 'tables';
+	- var globalId;
 
 block title
 	title Parameter List
@@ -47,9 +48,10 @@ block content
 										td= parameter.updatedAt
 										td
 											.btn-group
-												a.btn.btn-primary(href='#'): i.fa.fa-lg.fa-edit
 												a.btn.btn-primary
-													.demoNotify(href='#', row=parameter._id): i.fa.fa-lg.fa-trash
+													.editParameter(href='#editParameterDiv', param=parameter): i.fa.fa-lg.fa-edit
+												a.btn.btn-primary
+													.deleteNotify(href='#', id=parameter._id): i.fa.fa-lg.fa-trash
 									tr
 										td= parameter.type
 										td= parameter.subType
@@ -59,11 +61,100 @@ block content
 										td= parameter.updatedAt
 										td
 								p
-									a.btn.btn-primary.icon-btn(href="")
+									a.btn.btn-primary#addParameter(href='#newParameter')
 										i.fa.fa-plus
 										| Add Parameter
+
+	.row(id='newParameter', style="display:none")
+		.col-md-12
+			.tile
+				h3.tile-title New Parameter
+
+				.tile-body
+
+					form.row
+
+						.form-group.col-md-3
+							label.control-label Type
+							input.form-control(id="Type", placeholder="Enter type")
+
+						.form-group.col-md-3
+							label.control-label SubType
+							input.form-control(id="subType", placeholder="Enter SubType")
+
+						.form-group.col-md-3
+							label.control-label TR Value
+							input.form-control(id="TRvalue", placeholder="Enter TR Value")
+
+						.form-group.col-md-3
+							label.control-label EN Value
+							input.form-control(id="ENvalue", placeholder="Enter EN Value")
+
+						.form-group.col-md-3
+							label.control-label TR Explanation
+							input.form-control(id="TRexp", placeholder="Enter TR Expln.")
+
+						.form-group.col-md-3
+							label.control-label EN Explanation
+							input.form-control(id="ENexp", placeholder="Enter EN Expln.")
+
+				.tile-footer
+					.row
+						.col-md-8.col-md-offset-3
+							a.btn.btn-secondary#cancelAddParameter(href='#')
+								i.fa.fa-fw.fa-lg.fa-times-circle
+								| Cancel
+							| &nbsp;&nbsp;&nbsp;
+							a.btn.btn-primary#submitAddParameter
+								i.fa.fa-fw.fa-lg.fa-check-circle
+								| Submit
+
+	.row(id='editParameterDiv', style="display:none")
+		.col-md-12
+			.tile
+				h3.tile-title Edit Parameter
+
+				.tile-body
+
+					form.row
+
+						.form-group.col-md-3
+							label.control-label Type
+							input.form-control(id="TypeE", placeholder="Enter type")
+
+						.form-group.col-md-3
+							label.control-label SubType
+							input.form-control(id="subTypeE", placeholder="Enter SubType")
+
+						.form-group.col-md-3
+							label.control-label TR Value
+							input.form-control(id="TRvalueE", placeholder="Enter TR Value")
+
+						.form-group.col-md-3
+							label.control-label EN Value
+							input.form-control(id="ENvalueE", placeholder="Enter EN Value")
+
+						.form-group.col-md-3
+							label.control-label TR Explanation
+							input.form-control(id="TRexpE", placeholder="Enter TR Expln.")
+
+						.form-group.col-md-3
+							label.control-label EN Explanation
+							input.form-control(id="ENexpE", placeholder="Enter EN Expln.")
+
+				.tile-footer
+					.row
+						.col-md-8.col-md-offset-3
+							a.btn.btn-secondary#cancelEditParameter(href='#')
+								i.fa.fa-fw.fa-lg.fa-times-circle
+								| Cancel
+							| &nbsp;&nbsp;&nbsp;
+							a.btn.btn-primary#submitEditParameter
+								i.fa.fa-fw.fa-lg.fa-check-circle
+								| Submit
+
+
 block specific-js
-	// Data table plugin
 	script(type='text/javascript', src="js/plugins/jquery.dataTables.min.js")
 	script(type='text/javascript', src="js/plugins/dataTables.bootstrap.min.js")
 	script(type='text/javascript', src="js/plugins/bootstrap-notify.min.js")
@@ -71,11 +162,11 @@ block specific-js
 	script(type='text/javascript').
 		$('#sampleTable').DataTable();
 	script(type='text/javascript').
-		$('.demoNotify').click(function(){
+		$('.deleteNotify').click(function(){
 			let self = this;
 			swal({
 				title: "Are you sure?",
-				text: "You will not be able to recover this imaginary file!",
+				text: "You will not be able to recover this parameter!",
 				type: "warning",
 				showCancelButton: true,
 				confirmButtonText: "Yes, delete it!",
@@ -85,7 +176,7 @@ block specific-js
 			}, function(isConfirm) {
 				if (isConfirm) {
 					$.ajax({
-					  url: '/parameters/'+ $(self).attr("row"),
+					  url: '/parameters/'+ $(self).attr("id"),
 					  method: 'DELETE',
 						success: function(resp) {
 							swal({
@@ -103,3 +194,88 @@ block specific-js
 				}
 			});
 		});
+		$('#addParameter').click(function(){
+			let newParameter = document.getElementById("newParameter");
+			$(newParameter).show();
+		});
+		$('#cancelAddParameter').click(function(){
+			var newParameter = document.getElementById("newParameter");
+			$(newParameter).hide();
+		});
+		$('.editParameter').click(function(){
+			let self = this;
+			let parameterObject = JSON.parse($(self).attr("param"));
+			globalId = parameterObject._id;
+			let editParameter = document.getElementById("editParameterDiv");
+			$(editParameter).show();
+			document.getElementById("TypeE").value = parameterObject.type;
+			document.getElementById("subTypeE").value = parameterObject.subType;
+			document.getElementById("TypeE").disabled = true;
+			document.getElementById("subTypeE").disabled = true;
+			document.getElementById("TRvalueE").value = parameterObject.value.tr;
+			document.getElementById("ENvalueE").value = parameterObject.value.en;
+			document.getElementById("TRexpE").value = parameterObject.explanation.tr;
+			document.getElementById("ENexpE").value = parameterObject.explanation.en;
+		});
+		$('#cancelEditParameter').click(function(){
+			var newParameter = document.getElementById("editParameter");
+			$(newParameter).hide();
+		});
+		$('#submitAddParameter').click(function(){
+			let parameterObject = {
+				"type" : document.getElementById("Type").value,
+				"subType" : document.getElementById("subType").value,
+				"value" : {
+					"tr" : document.getElementById("TRvalue").value,
+					"en" : document.getElementById("ENvalue").value
+				},
+				"explanation" : {
+					"tr" : document.getElementById("TRexp").value,
+					"en" : document.getElementById("ENexp").value
+				}
+			}
+			$.ajax({
+				url: '/parameters',
+				method: 'POST',
+				data: parameterObject,
+				success: function(resp) {
+					swal({
+					title: "Parameter Added!",
+					text: resp.data,
+					type: "success"}, function(isConfirm) {
+						if (isConfirm) {
+							window.location.reload();
+						}
+					});
+				},
+			});
+			//console.log(parameterObject);
+			//$(newParameter).hide();
+		});
+		$('#submitEditParameter').click(function(){
+			let parameterObject = {
+				"value" : {
+					"tr" : document.getElementById("TRvalueE").value,
+					"en" : document.getElementById("ENvalueE").value
+				},
+				"explanation" : {
+					"tr" : document.getElementById("TRexpE").value,
+					"en" : document.getElementById("ENexpE").value
+				}
+			}
+			$.ajax({
+				url: '/parameters/'+ globalId,
+				method: 'PUT',
+				data: parameterObject,
+				success: function(resp) {
+					swal({
+					title: "Updated!",
+					text: resp.data,
+					type: "success"}, function(isConfirm) {
+						if (isConfirm) {
+							window.location.reload();
+						}
+					});
+				},
+			});
+			});

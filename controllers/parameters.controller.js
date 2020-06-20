@@ -1,7 +1,6 @@
 const ParametersModel = require('../models/parameters.model');
 
 exports.insertParameter = function(req, res) {
-  console.log(req.body);
   const parameters = new ParametersModel(
       {
         type: req.body.type,
@@ -9,7 +8,6 @@ exports.insertParameter = function(req, res) {
         value: req.body.value,
         explanation: req.body.explanation,
       });
-  console.log(req.body);
   ParametersModel.create(parameters, function(err, doc) {
     if (err) {
       console.log(err);
@@ -18,6 +16,26 @@ exports.insertParameter = function(req, res) {
     console.log(doc);
     res.send(doc);
   });
+};
+
+exports.updateParameter = function(req, res) {
+  const parameters = new ParametersModel(
+      {
+        _id: req.params._id,
+        type: req.body.type,
+        subType: req.body.subType,
+        value: req.body.value,
+        explanation: req.body.explanation,
+      });
+  ParametersModel.updateOne({'_id': req.params._id}, {$set: parameters},
+      function(err, doc) {
+        if (err) {
+          console.log(err);
+          return res.send(err);
+        }
+        console.log(doc);
+        res.send(doc);
+      });
 };
 
 exports.getPage = async function(req, res) {
