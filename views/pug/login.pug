@@ -12,17 +12,17 @@ html
 			.logo: h1 Modül Mesaj Uygulaması
 
 			.login-box
-				form.login-form(action="/dashboard")
+				form.login-form(action="/login", method="POST")
 					h3.login-head
 						i.fa.fa-lg.fa-fw.fa-user
 						| GİRİŞ
 					.form-group
 						label.control-label EMAIL
-						input.form-control(type="text", placeholder="Email", autofocus)
+						input#username.form-control(type="text" placeholder='gauss' name="username" autofocus)
 
 					.form-group
 						label.control-label ŞİFRE
-						input.form-control(type="password", placeholder="Şifre")
+						input#password.form-control(type="password" placeholder='password' name="password")
 
 					.form-group
 						.utility
@@ -34,7 +34,7 @@ html
 								a(href="#" data-toggle="flip") Şifremi Unuttum ?
 
 					.form-group.btn-container
-						button.btn.btn-primary.btn-block
+						button.btn.btn-primary.btn-block(type='submit')
 							i.fa.fa-sign-in.fa-lg.fa-fw
 							| Giriş
 
