@@ -49,7 +49,7 @@ block content
 										td
 											.btn-group
 												a.btn.btn-primary
-													.editParameter(href='#editParameterDiv', param=parameter): i.fa.fa-lg.fa-edit
+													.editParameter(param=parameter): i.fa.fa-lg.fa-edit
 												a.btn.btn-primary
 													.deleteNotify(href='#', id=parameter._id): i.fa.fa-lg.fa-trash
 									tr
@@ -196,7 +196,9 @@ block specific-js
 		});
 		$('#addParameter').click(function(){
 			let newParameter = document.getElementById("newParameter");
+			let editParameter = document.getElementById("editParameterDiv");
 			$(newParameter).show();
+			$(editParameter).hide();
 		});
 		$('#cancelAddParameter').click(function(){
 			var newParameter = document.getElementById("newParameter");
@@ -206,8 +208,11 @@ block specific-js
 			let self = this;
 			let parameterObject = JSON.parse($(self).attr("param"));
 			globalId = parameterObject._id;
+			let newParameter = document.getElementById("newParameter");
 			let editParameter = document.getElementById("editParameterDiv");
+			$(newParameter).hide();
 			$(editParameter).show();
+			$("#editParameterDiv").attr("tabindex",-1).focus();
 			document.getElementById("TypeE").value = parameterObject.type;
 			document.getElementById("subTypeE").value = parameterObject.subType;
 			document.getElementById("TypeE").disabled = true;
